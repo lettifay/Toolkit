@@ -219,7 +219,7 @@ def reserve_label(xml_dir,reserve_labels):
     print 'Object reserved with labels', str(reserve_labels)
     return
 
-def rm_NoneObj_pair(xml_dir,jpg_dir,extension='.jpg'):
+def rm_none_obj_pair(xml_dir,img_dir,extension='.jpg'):
     rm_list=[]
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
@@ -232,10 +232,10 @@ def rm_NoneObj_pair(xml_dir,jpg_dir,extension='.jpg'):
     for f in rm_list:
         #print f
         xml_file = os.path.join(xml_dir,f + '.xml')
-        img_file = os.path.join(jpg_dir,f + extension)
+        img_file = os.path.join(img_dir,f + extension)
         #print xml_file
         #print img_file
         os.remove(xml_file)
         os.remove(img_file)
     print str(len(rm_list))+' xml-jpg files without obj removed.'
-    return
+    return 
