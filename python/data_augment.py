@@ -4,6 +4,31 @@ import cv2
 import numpy as np
 import shutil
 
+# rotate images to an given angle
+# none operation to annotation, cannot be used in object detection dataset augment.
+# eg. img_rotate('./test/jpg','./test/out',30,0.8,background=(255,255,255))
+def img_rotate(img_dir,out_dir,angle,scale,background=(0,0,0)):
+    prefix = 'rotate'+'_'+str(angle)+'_'+str(scale)+'_'
+        
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
+    
+    for f in os.listdir(img_dir):
+        rotater_name = prefix + f
+        
+        if angle == 0:
+            shutil.copyfile(os.path.join(img_dir,f),os.path.join(out_dir,rotater_name))
+        else:
+            im = cv2.imread(os.path.join(img_dir,f))
+            
+            rotate_center = (im.shape[0]/2,im.shape[1]/2)
+            rotate_angle = angle
+            rotate_scale = scale
+            rotate_matrix = cv2.getRotationMatrix2D(rotate_center,rotate_angle,rotate_scale)
+            
+            rotater = cv2.warpAffine(im,rotate_matrix,(im.shape[0],im.shape[1]),borderValue=background)
+            cv2.imwrite(os.path.join(out_dir,rotater_name),rotater)
+
 # add noise to image
 # eg. add_noise(1000,'./test/jpg','./test/out',csv_path='./test/test.csv',dlter='|')
 def add_noise(noise_num,img_dir,out_dir,csv_path=None,dlter=','):
