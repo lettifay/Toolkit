@@ -99,8 +99,8 @@ def img_shift(offset,img_dir,out_dir,csv_path=None,dlter=',',background=(0,0,0))
             for row in reader:
                 img_name,label,x,y,w,h = row
                 changer_name = prefix + img_name
-                sft_x = str(int(x) + offset[0])
-                sft_y = str(int(y) + offset[1])
+                sft_x = str(int(round(float(x))) + offset[0])
+                sft_y = str(int(round(float(y))) + offset[1])
                 records.append([changer_name,label,sft_x,sft_y,w,h])
         
         sft_csv_name = prefix + os.path.split(csv_path)[1]
