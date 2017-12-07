@@ -40,21 +40,28 @@ def count_labels(xml_dir,labels):
     return
 
 # check jpg/xml files pair
-def check_file_pair(xml_dir,jpg_dir,extension='.jpg'):
+def check_file_pair(xml_dir,img_dir,extension='.jpg',rm=False):
     print "xml file number: ",len(os.listdir(xml_dir))
-    print "jpg file number: ",len(os.listdir(jpg_dir))
+    print "img file number: ",len(os.listdir(img_dir))
 
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
             shortname = os.path.splitext(f)[0]
-            if not os.path.exists(os.path.join(jpg_dir, shortname + extension)):
-                print "Can not find jpg file: ", f
+            if not os.path.exists(os.path.join(img_dir, shortname + extension)):
+                print "Can not find img file:", f
 
-    for f in os.listdir(jpg_dir):
+    for f in os.listdir(img_dir):
         if f.lower().endswith(extension):
             shortname = os.path.splitext(f)[0]
             if not os.path.exists(os.path.join(xml_dir, shortname + '.xml')):
-                print "Can not find xml file: ", f
+                print "Can not find xml file:", f
+                if rm :
+                    print "Remove the redundant img file:", shortname + extension
+                    os.remove(os.path.join(jpg_dir, shortname + extension))
+    if rm:
+        print "xml file number: ",len(os.listdir(xml_dir))
+        print "img file number: ",len(os.listdir(img_dir))
+        
     print "jpg/xml files pair checked."
     return
 
