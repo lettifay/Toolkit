@@ -16,7 +16,7 @@ def dir_check(jpg_dir, xml_dir, trainval_txt_dir, gt_img_dir):
     for d in output_dir_list:
         if not os.path.exists(d):
             if d == trainval_txt_dir:
-                os.system("mkdir -p ./ImageSets/Main")
+                os.makedirs(trainval_txt_dir)
                 print "trainval_txt_dir made."
             if d == gt_img_dir:
                 os.mkdir(gt_img_dir)
