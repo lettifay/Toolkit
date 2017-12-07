@@ -57,7 +57,7 @@ def check_file_pair(xml_dir,img_dir,extension='.jpg',rm=False):
                 print "Can not find xml file:", f
                 if rm :
                     print "Remove the redundant img file:", shortname + extension
-                    os.remove(os.path.join(jpg_dir, shortname + extension))
+                    os.remove(os.path.join(img_dir, shortname + extension))
     if rm:
         print "xml file number: ",len(os.listdir(xml_dir))
         print "img file number: ",len(os.listdir(img_dir))
