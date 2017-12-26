@@ -163,7 +163,7 @@ def draw_bndbox(in_img_path,bndbox_list,out_img_path,clr,thickness):
     cv2.imwrite(out_img_path,im)
     return
 
-def draw_gt_img(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green',thickness=1):
+def create_groundtruth(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green',thickness=1):
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
             xml_file = os.path.join(xml_dir,f)
