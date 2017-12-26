@@ -40,7 +40,7 @@ def count_labels(xml_dir,labels):
     return
 
 # check jpg/xml files pair
-def check_file_pair(xml_dir,img_dir,extension='.jpg',rm=False):
+def check_file_pair(xml_dir,jpg_dir,extension='.jpg',rm=False):
     print "xml file number: ",len(os.listdir(xml_dir))
     print "img file number: ",len(os.listdir(img_dir))
 
