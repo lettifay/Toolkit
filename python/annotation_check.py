@@ -175,6 +175,10 @@ def draw_gt_img(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green',thickn
     return
 
 def create_trainval_txt(xml_dir,trainval_txt_dir):
+    if not os.path.exists(trainval_txt_dir):
+        os.makedirs(trainval_txt_dir)
+        print 'trainval_txt_dir made.'
+    
     trainval_txt_file = os.path.join(trainval_txt_dir,'trainval.txt')
     with open(trainval_txt_file ,'wb') as f:
         for file_name in os.listdir(xml_dir):
