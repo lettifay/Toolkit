@@ -5,22 +5,18 @@ import xml.dom.minidom as MD
 import cv2
 
 # check dir path
-def dir_check(jpg_dir, xml_dir, trainval_txt_dir, gt_img_dir):
-    input_dir_list = [jpg_dir, xml_dir]
-    output_dir_list = [trainval_txt_dir, gt_img_dir]
+def dir_check(img_dir, xml_dir, gt_img_dir):
 
-    for d in input_dir_list:
-        if not os.path.exists(d):
-            print "Please check input jpg/xml dir path."
+    if not os.path.exists(xml_dir):
+        print "Please check input xml dir path (Annotations)."
+    
+    if not os.path.exists(jpg_dir):
+        print "Please check input img dir path (JPEGImages)."
 
-    for d in output_dir_list:
-        if not os.path.exists(d):
-            if d == trainval_txt_dir:
-                os.makedirs(trainval_txt_dir)
-                print "trainval_txt_dir made."
-            if d == gt_img_dir:
-                os.mkdir(gt_img_dir)
-                print "gt_img_dir made."
+    if not os.path.exists(gt_img_dir):
+        os.mkdir(gt_img_dir)
+        print "gt_img_dir made."
+        
     print 'input and output dir checked.'
     return
 
