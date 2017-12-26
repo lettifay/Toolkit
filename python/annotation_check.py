@@ -226,7 +226,7 @@ def reserve_label(xml_dir,reserve_labels):
     print 'Object reserved with labels', str(reserve_labels)
     return
 
-def rm_none_obj_pair(xml_dir,img_dir,extension='.jpg'):
+def rm_none_obj_pair(xml_dir,jpg_dir,extension='.jpg'):
     rm_list=[]
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
