@@ -5,7 +5,7 @@ import xml.dom.minidom as MD
 import cv2
 
 # check dir path
-def dir_check(img_dir, xml_dir, gt_img_dir):
+def dir_check(jpg_dir, xml_dir, gt_img_dir):
 
     if not os.path.exists(xml_dir):
         print "Please check input xml dir path (Annotations)."
@@ -13,11 +13,7 @@ def dir_check(img_dir, xml_dir, gt_img_dir):
     if not os.path.exists(jpg_dir):
         print "Please check input img dir path (JPEGImages)."
 
-    if not os.path.exists(gt_img_dir):
-        os.mkdir(gt_img_dir)
-        print "gt_img_dir made."
-        
-    print 'input and output dir checked.'
+    print 'img/xml dir checked.'
     return
 
 # check labeled sample of each class
@@ -164,6 +160,10 @@ def draw_bndbox(in_img_path,bndbox_list,out_img_path,clr,thickness):
     return
 
 def create_groundtruth(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green',thickness=1):
+    if not os.path.exists(gt_img_dir):
+        os.mkdir(gt_img_dir)
+        print "Groundtruth dir made."
+        
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
             xml_file = os.path.join(xml_dir,f)
