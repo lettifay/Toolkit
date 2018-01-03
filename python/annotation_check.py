@@ -5,7 +5,7 @@ import xml.dom.minidom as MD
 import cv2
 
 # check dir path
-def dir_check(jpg_dir, xml_dir, gt_img_dir):
+def dir_check(jpg_dir, xml_dir):
 
     if not os.path.exists(xml_dir):
         print "Please check input xml dir path (Annotations)."
