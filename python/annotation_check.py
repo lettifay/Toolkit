@@ -8,12 +8,12 @@ import cv2
 def dir_check(jpg_dir, xml_dir):
 
     if not os.path.exists(xml_dir):
-        print "Please check input xml dir path (Annotations)."
+        print("Please check input xml dir path (Annotations).")
     
     if not os.path.exists(jpg_dir):
-        print "Please check input img dir path (JPEGImages)."
+        print("Please check input img dir path (JPEGImages).")
 
-    print 'img/xml dir checked.'
+    print('img/xml dir checked.')
     return
 
 # check labeled sample of each class
@@ -28,36 +28,36 @@ def count_labels(xml_dir,labels):
                 for obj in root.findall('object'):
                     if obj.find('name').text == label:
                         count = count + 1
-        print label,'number:',count
+        print(label,'number:',count)
     return
 
 # check jpg/xml files pair
 def check_file_pair(xml_dir,img_dir,extension='.jpg',rm=False):
-    print "xml file number: ",len(os.listdir(xml_dir))
-    print "img file number: ",len(os.listdir(img_dir))
+    print("xml file number: ",len(os.listdir(xml_dir)))
+    print("img file number: ",len(os.listdir(img_dir)))
 
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
             shortname = os.path.splitext(f)[0]
             if not os.path.exists(os.path.join(img_dir, shortname + extension)):
-                print "Can not find img file for :", f
+                print("Can not find img file for :", f)
                 if rm:
-                    print "Remove the redundant xml file:", f
+                    print("Remove the redundant xml file:", f)
                     os.remove(os.path.join(xml_dir, f))
 
     for f in os.listdir(img_dir):
         if f.lower().endswith(extension):
             shortname = os.path.splitext(f)[0]
             if not os.path.exists(os.path.join(xml_dir, shortname + '.xml')):
-                print "Can not find xml file for :", f
+                print("Can not find xml file for :", f)
                 if rm :
-                    print "Remove the redundant img file:", f
+                    print("Remove the redundant img file:", f)
                     os.remove(os.path.join(img_dir, f))
     if rm:
-        print "xml file number: ",len(os.listdir(xml_dir))
-        print "img file number: ",len(os.listdir(img_dir))
+        print("xml file number: ",len(os.listdir(xml_dir)))
+        print("img file number: ",len(os.listdir(img_dir)))
         
-    print "jpg/xml files pair checked."
+    print("jpg/xml files pair checked.")
     return
 
 # check and update xml value
@@ -79,13 +79,13 @@ def validate_xml(xml_dir,jpg_dir,labels,extension='.jpg',update=False):
             if  width_xml != w or height_xml != h or dim_xml != dim:
                 if not update:
                     if width_xml != w:
-                        print "width not match: %s and %s."%(jpg_file,xml_file)
+                        print("width not match: %s and %s."%(jpg_file,xml_file))
                     if height_xml != h:
-                        print "height not match: %s and %s."%(jpg_file,xml_file)
+                        print("height not match: %s and %s."%(jpg_file,xml_file))
                     if dim_xml != dim:
-                        print "dim not match: %s and %s."%(jpg_file,xml_file)
+                        print("dim not match: %s and %s."%(jpg_file,xml_file))
                 if update:
-                    print "Update the size value in xml ..."
+                    print("Update the size value in xml ...")
                     root.find('size').find('width').text = str(w)
                     root.find('size').find('height').text = str(h)
                     root.find('size').find('depth').text = str(dim)
@@ -95,12 +95,12 @@ def validate_xml(xml_dir,jpg_dir,labels,extension='.jpg',update=False):
                 #check labels
                 if (obj.find('name').text not in labels) and (obj.find('name').text.lower() in labels):
                     if not update:
-                        print 'Upper case label: %s in %s' %(obj.find('name').text, xml_file)
+                        print('Upper case label: %s in %s' %(obj.find('name').text, xml_file))
                     if update:
-                        print 'Update the label name to lower case ...'
+                        print('Update the label name to lower case ...')
                         obj.find('name').text = obj.find('name').text.lower()
                 if (obj.find('name').text not in labels) and (obj.find('name').text.lower() not in labels):
-                    print 'Undefined label: %s in %s' %(obj.find('name').text, xml_file)
+                    print('Undefined label: %s in %s' %(obj.find('name').text, xml_file))
 
                 # check bnbox coordinates
                 xmin = int(obj.find('bndbox').find('xmin').text)
@@ -110,12 +110,12 @@ def validate_xml(xml_dir,jpg_dir,labels,extension='.jpg',update=False):
                 
                 if xmin <= 0 or ymin <=0 or xmax >= w or ymax >= h or xmin >= xmax or ymin >= ymax:
                     if not update:
-                        print xml_file, ": illegal bnbox value."
-                        print 'image width=%i, height=%i' %(w,h)
-                        print 'xmin=%i,ymin=%i,xmax=%i,ymax=%i' %(xmin,ymin,xmax,ymax)
+                        print(xml_file, ": illegal bnbox value.")
+                        print('image width=%i, height=%i' %(w,h))
+                        print('xmin=%i,ymin=%i,xmax=%i,ymax=%i' %(xmin,ymin,xmax,ymax))
 
                     if update :
-                        print 'Update the bnbox value ...'               
+                        print('Update the bnbox value ...')               
                         if xmin <=0:
                             obj.find('bndbox').find('xmin').text = str(1)
                         if ymin <=0:
@@ -132,7 +132,7 @@ def validate_xml(xml_dir,jpg_dir,labels,extension='.jpg',update=False):
                             obj.find('bndbox').find('ymax').text = str(ymin)                                         
             if update:
                 tree.write(xml_file)
-    print "xml value checked."
+    print("xml value checked.")
     return
 
 def parse_xml_bnbox(xml_path):
@@ -165,7 +165,7 @@ def draw_bndbox(in_img_path,bndbox_list,out_img_path,clr,thickness):
 def create_groundtruth(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green',thickness=1):
     if not os.path.exists(gt_img_dir):
         os.mkdir(gt_img_dir)
-        print "Groundtruth dir made."
+        print("Groundtruth dir made.")
         
     for f in os.listdir(xml_dir):
         if f.lower().endswith('.xml'):
@@ -174,20 +174,20 @@ def create_groundtruth(xml_dir,jpg_dir,gt_img_dir,extension='.jpg',color='green'
             gt_file = os.path.join(gt_img_dir, os.path.splitext(f)[0] + extension)
             bndbox_list = parse_xml_bnbox(xml_file)
             draw_bndbox(jpg_file,bndbox_list,gt_file,color,thickness)
-    print "Ground truth image created."
+    print("Ground truth image created.")
     return
 
 def create_trainval_txt(xml_dir,trainval_txt_dir):
     if not os.path.exists(trainval_txt_dir):
         os.makedirs(trainval_txt_dir)
-        print 'trainval_txt_dir made.'
+        print('trainval_txt_dir made.')
     
     trainval_txt_file = os.path.join(trainval_txt_dir,'trainval.txt')
     with open(trainval_txt_file ,'wb') as f:
         for file_name in os.listdir(xml_dir):
             if file_name.lower().endswith('.xml'):
                 f.write(os.path.splitext(file_name)[0] + '\n')
-    print 'trainval.txt created.' 
+    print('trainval.txt created.' )
     return
 
 def update_label(xml_dir,ori_label,new_label):
@@ -200,7 +200,7 @@ def update_label(xml_dir,ori_label,new_label):
                 if obj.find('name').text == ori_label: 
                     obj.find('name').text = new_label
             tree.write(xml_file)
-            print 'Label updated, from %s to %s : %s' %(ori_label,new_label,xml_file)
+            print('Label updated, from %s to %s : %s' %(ori_label,new_label,xml_file))
     return
 
 def remove_label(xml_dir,aim_label):
@@ -213,7 +213,7 @@ def remove_label(xml_dir,aim_label):
                 if obj.find('name').text == aim_label: 
                     root.remove(obj)
         tree.write(xml_file)
-    print 'Object removed with label',aim_label
+    print('Object removed with label',aim_label)
     return
 
 def reserve_label(xml_dir,reserve_labels):
@@ -226,7 +226,7 @@ def reserve_label(xml_dir,reserve_labels):
                 if obj.find('name').text not in reserve_labels: 
                     root.remove(obj)
             tree.write(xml_file)
-    print 'Object reserved with labels', str(reserve_labels)
+    print('Object reserved with labels', str(reserve_labels))
     return
 
 def rm_none_obj_pair(img_dir,jpg_dir,extension='.jpg'):
@@ -247,5 +247,5 @@ def rm_none_obj_pair(img_dir,jpg_dir,extension='.jpg'):
         #print img_file
         os.remove(xml_file)
         os.remove(img_file)
-    print str(len(rm_list))+' xml-jpg files without obj removed.'
-    return 
+    print(str(len(rm_list))+' xml-jpg files without obj removed.')
+    return
